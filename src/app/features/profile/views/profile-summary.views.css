@@ -1,0 +1,11 @@
+hr {
+  margin-top: -1rem;
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: #333;
+}
+
+p {
+  text-align: justify;
+}

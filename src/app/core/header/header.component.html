@@ -1,4 +1,4 @@
-<header class="container">
+<header>
     <select [value]="profileDataService.selectedProfile()" (change)="onProfileSelect($event)">
         <option value="" [disabled]="selectedProfile">Select a profile</option>
         @for (profileListItem of listOfProfiles; track profileListItem.id) {
