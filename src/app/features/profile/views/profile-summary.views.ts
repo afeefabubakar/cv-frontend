@@ -19,7 +19,6 @@ export class ProfileSummaryComponent {
       profile?.subscribe((profile) => {
         if (profile) {
           this.profileSummary = profile.summary;
-          console.log(this.profileSummary);
         }
       });
     });

@@ -2,6 +2,7 @@
     --color-light-gray: #f5f5f5;
     --color-border-gray: #e0e0e0;
     --color-text-gray-blue: hsl(200, 20%, 33%);
+    --color-gray-blue: hsl(200, 20%, 20%);
 }
 
 body {
@@ -19,4 +20,48 @@ body {
     @media (min-width: 800px) {
         padding: 1.5rem 5rem;
     }
+}
+
+.button-primary {
+    background-color: var(--color-gray-blue);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    &:hover {
+        opacity: 0.95;
+    }
+}
+
+.button-outline {
+  background-color: transparent;
+  color: var(--color-gray-blue);
+  border: 1px solid var(--color-gray-blue);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 1;
+
+  &:hover {
+    background-color: var(--color-light-gray);
+  }
+}
+
+hr {
+  margin-top: -1rem;
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: #333;
+}
+
+.form-input-error {
+  border: 1px solid red;
+}
+
+.form-input-error-message {
+  color: red;
 }

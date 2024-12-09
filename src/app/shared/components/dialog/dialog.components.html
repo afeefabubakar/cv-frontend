@@ -2,10 +2,11 @@
   <div class="dialog-container" role="dialog" aria-modal="true">
     <div class="dialog-header">
       <h2 class="dialog-title">{{ title }}</h2>
-      <button *ngIf="showCloseButton" 
-              class="close-button" 
-              (click)="onClose()" 
-              aria-label="Close dialog">
+      <button 
+        *ngIf="showCloseButton" 
+        class="close-button" 
+        (click)="onClose()" 
+        aria-label="Close dialog">
         ×
       </button>
     </div>
