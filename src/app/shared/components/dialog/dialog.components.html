@@ -1,0 +1,21 @@
+<div class="dialog-overlay" *ngIf="isOpen" (click)="onOverlayClick($event)">
+  <div class="dialog-container" role="dialog" aria-modal="true">
+    <div class="dialog-header">
+      <h2 class="dialog-title">{{ title }}</h2>
+      <button *ngIf="showCloseButton" 
+              class="close-button" 
+              (click)="onClose()" 
+              aria-label="Close dialog">
+        ×
+      </button>
+    </div>
+    
+    <div class="dialog-content">
+      <ng-content></ng-content>
+    </div>
+    
+    <div class="dialog-footer">
+      <ng-content select="[dialog-footer]"></ng-content>
+    </div>
+  </div>
+</div>
