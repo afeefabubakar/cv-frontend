@@ -1,0 +1,8 @@
+button {
+  width: 100%;
+}
+
+.dialog-footer-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
