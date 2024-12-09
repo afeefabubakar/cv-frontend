@@ -17,4 +17,17 @@ export interface Profile {
   createdAt: Date;
   updatedAt: Date;
   location: City;
+  workExperience: WorkExperience[];
+}
+
+export interface WorkExperience {
+  id: string;
+  company: string;
+  description: string[];
+  jobTitle: string;
+  startDate: Date;
+  endDate?: Date;
+  isCurrent: boolean;
+  location: City;
+  profile: Profile;
 }
