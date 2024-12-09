@@ -1,4 +1,6 @@
 :root {
+    --color-light-gray: #f5f5f5;
+    --color-border-gray: #e0e0e0;
     --color-text-gray-blue: hsl(200, 20%, 33%);
 }
 
