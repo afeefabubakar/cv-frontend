@@ -19,7 +19,13 @@ h2 {
 
 .contact-details {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media (min-width: 640px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }
 
 .contact-details {
