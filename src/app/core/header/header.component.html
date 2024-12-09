@@ -1,5 +1,16 @@
-<header>
-    <app-input-switch>
-        <h1 class="title" #content>{{ title }}</h1>
-    </app-input-switch>
+<header class="container">
+    <select [value]="profileDataService.selectedProfile()" (change)="onProfileSelect($event)">
+        <option value="" [disabled]="selectedProfile">Select a profile</option>
+        @for (profileListItem of listOfProfiles; track profileListItem.id) {
+            <option value="{{ profileListItem.id }}">{{ profileListItem.firstName }} {{ profileListItem.lastName }}</option>
+        }
+    </select>
+
+    <h1>{{ fullName }}</h1>
+    <h2>{{ jobTitle }}</h2>
+    <ul *ngIf="location || email || phone" class="contact-details">
+        <li><svg-icon src="icons/location.svg" name="location" class="icon"></svg-icon> {{ location }}</li>
+        <li><svg-icon src="icons/email.svg" name="email" class="icon"></svg-icon> <a [href]="'mailto:' + email">{{ email }}</a></li>
+        <li><svg-icon src="icons/phone.svg" name="phone" class="icon"></svg-icon> <a [href]="'tel:' + phone">{{ phone }}</a></li>
+    </ul>
 </header>
