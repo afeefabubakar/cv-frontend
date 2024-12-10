@@ -1,27 +1,30 @@
 import {
   Component,
-  ElementRef,
+  effect,
   EventEmitter,
   Input,
   Output,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
 import {
   FormControl,
-  FormsModule,
   Validators,
   ValidationErrors,
+  ReactiveFormsModule,
+  FormArray,
 } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { WorkExperience } from '../../../shared/types/profile';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { LocationService } from '../../location/services/location.services';
+import { City, Country, State } from '../../../shared/types/location';
 
 @Component({
   selector: 'app-work-experience-form',
-  imports: [FormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './work-experience.forms.html',
   styleUrl: './work-experience.forms.css',
+  providers: [LocationService],
 })
 export class WorkExperienceFormComponent {
   @Input() open: boolean = false;
@@ -29,11 +32,55 @@ export class WorkExperienceFormComponent {
     new EventEmitter<WorkExperience>();
   form: FormGroup;
   invalidFields: { [key: string]: ValidationErrors } = {};
+  submitted = false;
+  listOfLocations: { cities: City[]; states: State[]; countries: Country[] } = {
+    cities: [],
+    states: [],
+    countries: [],
+  };
 
-  constructor() {
+  constructor(private locationService: LocationService) {
+    effect(() => {
+      this.listOfLocations = this.locationService.listOfLocations();
+    });
+
     this.form = new FormGroup({
       company: new FormControl('', Validators.required),
       jobTitle: new FormControl('', Validators.required),
+      location: new FormControl('', Validators.required),
+      state: new FormControl(
+        { value: '', disabled: true },
+        Validators.required
+      ),
+      country: new FormControl(
+        { value: '', disabled: true },
+        Validators.required
+      ),
+      startDate: new FormControl('', Validators.required),
+      endDate: new FormControl('', Validators.required),
+      isCurrent: new FormControl(false),
+      description: new FormArray(
+        [new FormControl('', Validators.required)],
+        Validators.required
+      ),
+    });
+
+    this.form.get('location')?.valueChanges.subscribe((location) => {
+      const selectedCity = this.listOfLocations.cities.find(
+        (c) => c.id === location
+      );
+      this.form.get('state')?.setValue(selectedCity?.stateId);
+      this.form.get('country')?.setValue(selectedCity?.countryId);
+    });
+
+    this.form.get('isCurrent')?.valueChanges.subscribe((isCurrent) => {
+      const endDateControl = this.form.get('endDate');
+      if (isCurrent) {
+        endDateControl?.disable();
+        endDateControl?.setValue(null);
+      } else {
+        endDateControl?.enable();
+      }
     });
   }
 
@@ -41,15 +88,16 @@ export class WorkExperienceFormComponent {
     if (changes['open']) {
       this.form.reset();
       this.invalidFields = {};
+      this.submitted = false;
     }
   }
 
   submit() {
+    this.submitted = true;
     if (!this.form.valid) {
       this.invalidFields = Object.keys(this.form.controls).reduce(
         (acc, key) => {
           const control = this.form.get(key);
-          console.log(key, control);
           if (control?.errors) {
             acc[key] = control.errors;
           }
@@ -61,5 +109,17 @@ export class WorkExperienceFormComponent {
       return;
     }
     this.onSubmit.emit(this.form.value);
+  }
+
+  get description() {
+    return this.form.get('description') as FormArray;
+  }
+
+  addDescription() {
+    this.description.push(new FormControl('', Validators.required));
+  }
+
+  removeDescription(index: number) {
+    this.description.removeAt(index);
   }
 }

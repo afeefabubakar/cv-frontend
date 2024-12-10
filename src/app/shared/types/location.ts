@@ -6,6 +6,8 @@ interface LocationDetails {
 }
 
 export interface City extends LocationDetails {
+  stateId: string;
+  countryId: string;
   state: State;
   country: Country;
   profiles: Profile[];

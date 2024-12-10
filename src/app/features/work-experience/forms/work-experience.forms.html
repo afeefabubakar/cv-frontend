@@ -1,12 +1,79 @@
-<form id="workExperienceForm" (ngSubmit)="submit()">
+<form id="workExperienceForm" [formGroup]="form" (ngSubmit)="submit()">
   <div class="form-field">
     <label for="company" [class.form-input-error-message]="invalidFields['company']">Company Name</label>
-    <input type="text" id="company" [class.form-input-error]="invalidFields['company']" name="company" [(ngModel)]="form.value.company" />
+    <input type="text" id="company" [class.form-input-error]="invalidFields['company']" formControlName="company" />
     <span *ngIf="invalidFields['company']" class="form-input-error-message">{{ invalidFields['company']['required'] ? 'Company name is required' : '' }}</span>
   </div>
   <div class="form-field">
     <label for="jobTitle" [class.form-input-error-message]="invalidFields['jobTitle']">Job Title</label>
-    <input type="text" id="jobTitle" [class.form-input-error]="invalidFields['jobTitle']" name="jobTitle" [(ngModel)]="form.value.jobTitle" />
+    <input type="text" id="jobTitle" [class.form-input-error]="invalidFields['jobTitle']" formControlName="jobTitle" />
     <span *ngIf="invalidFields['jobTitle']" class="form-input-error-message">{{ invalidFields['jobTitle']['required'] ? 'Job title is required' : '' }}</span>
   </div>
+  <div class="form-field">
+    <label for="location" [class.form-input-error-message]="invalidFields['location']">City</label>
+    <select id="location" [class.form-input-error]="invalidFields['location']" formControlName="location">
+      <option *ngFor="let city of listOfLocations.cities" [value]="city.id">{{ city.name }}</option>
+    </select>
+    <span *ngIf="invalidFields['location']" class="form-input-error-message">{{ invalidFields['location']['required'] ? 'Location is required' : '' }}</span>
+  </div>
+  <div class="form-field">
+    <label for="state" [class.form-input-error-message]="invalidFields['state']">State</label>
+    <select id="state" [class.form-input-error]="invalidFields['state']" formControlName="state">
+      <option *ngFor="let state of listOfLocations.states" [value]="state.id">{{ state.name }}</option>
+    </select>
+    <span *ngIf="invalidFields['state']" class="form-input-error-message">{{ invalidFields['state']['required'] ? 'State is required' : '' }}</span>
+  </div>
+  <div class="form-field">
+    <label for="country" [class.form-input-error-message]="invalidFields['country']">Country</label>
+    <select id="country" [class.form-input-error]="invalidFields['country']" formControlName="country">
+      <option *ngFor="let country of listOfLocations.countries" [value]="country.id">{{ country.name }}</option>
+    </select>
+    <span *ngIf="invalidFields['country']" class="form-input-error-message">{{ invalidFields['country']['required'] ? 'Country is required' : '' }}</span>
+  </div>
+  <div>
+    <div class="parallel-form-field">
+      <div class="form-field">
+        <label for="startDate" [class.form-input-error-message]="invalidFields['startDate']">Start Date</label>
+        <input type="date" id="startDate" [class.form-input-error]="invalidFields['startDate']" formControlName="startDate" />
+        <span *ngIf="invalidFields['startDate']" class="form-input-error-message">{{ invalidFields['startDate']['required'] ? 'Start date is required' : '' }}</span>
+      </div>
+      <div class="form-field">
+        <label for="endDate" [class.form-input-error-message]="invalidFields['endDate']">End Date</label>
+        <input type="date" id="endDate" [class.form-input-error]="invalidFields['endDate']" formControlName="endDate" />
+        <span *ngIf="invalidFields['endDate']" class="form-input-error-message">{{ invalidFields['endDate']['required'] ? 'End date is required' : '' }}</span>
+      </div>
+    </div>
+    <div class="form-checkbox">
+      <label for="isCurrent">Currently working here</label>
+      <input type="checkbox" id="isCurrent" formControlName="isCurrent" />
+    </div>
+  </div>
+  <div class="form-field">
+    <label>Description</label>
+    <div formArrayName="description">
+      <div *ngFor="let desc of description.controls; let i=index" class="form-field-array">
+        <div class="description-row">
+          <input 
+            type="text" 
+            [formControlName]="i"
+            [class.form-input-error]="submitted && description.at(i).errors"
+          />
+          <button type="button" (click)="removeDescription(i)" *ngIf="description.length > 1">
+            Remove
+          </button>
+        </div>
+        <span 
+          *ngIf="submitted && description.at(i).errors?.['required']" 
+          class="form-input-error-message"
+        >
+          Description is required
+        </span>
+      </div>
+    </div>
+    <button type="button" class="button-outline" (click)="addDescription()">
+      Add Description
+    </button>
+  </div>
+
 </form>
+

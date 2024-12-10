@@ -17,7 +17,7 @@ export interface Profile {
   createdAt: Date;
   updatedAt: Date;
   location: City;
-  workExperience: WorkExperience[];
+  workExperiences: WorkExperience[];
 }
 
 export interface WorkExperience {
