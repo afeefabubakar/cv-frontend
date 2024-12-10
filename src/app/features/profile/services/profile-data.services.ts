@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, Signal, signal } from '@angular/core';
 import { Profile, ProfileListItem } from '../../../shared/types/profile';
 import { QueryReturn } from '../../../shared/types';
-import { API_URL } from '../../../shared/utils';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileDataService {
@@ -12,7 +12,7 @@ export class ProfileDataService {
 
   constructor(private http: HttpClient) {
     this.http
-      .get<QueryReturn<ProfileListItem[]>>(API_URL + '/profile')
+      .get<QueryReturn<ProfileListItem[]>>(environment.apiUrl + '/profile')
       .subscribe((res) => {
         if (res.data) {
           this.listOfProfiles.set(res.data);
@@ -26,7 +26,9 @@ export class ProfileDataService {
     if (!this.selectedProfile()) return undefined;
 
     return this.http
-      .get<QueryReturn<Profile>>(API_URL + `/profile/${this.selectedProfile()}`)
+      .get<QueryReturn<Profile>>(
+        environment.apiUrl + `/profile/${this.selectedProfile()}`
+      )
       .pipe(switchMap((res) => of(res.data)));
   });
 }
