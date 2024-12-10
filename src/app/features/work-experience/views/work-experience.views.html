@@ -9,6 +9,23 @@
 <section *ngIf="selectedProfile">
   <h2>Work Experience</h2>
   <hr />
-  <p *ngIf="workExperience && workExperience.length === 0">No work experience added yet.</p>
+  <p *ngIf="workExperience() && workExperience().length === 0">No work experience added yet.</p>
+  <div *ngIf="workExperience() && workExperience().length > 0">
+    <div *ngFor="let work of workExperience()">
+      <div class="work-experience-title">
+        <h3>{{ work.jobTitle }} | {{ work.company }}</h3>
+        <button (click)="deleteWorkExperience(work.id)" class="button-icon destructive">
+          <svg-icon src="icons/delete.svg" name="delete" class="icon"></svg-icon>
+        </button>
+      </div>
+      <div class="work-experience-details">
+        <p>{{ work.location.state.name }}, {{ work.location.country.name }}</p>
+        <p>{{ work.startDate | date:'MMMM yyyy' }} - 
+          <ng-container *ngIf="work.isCurrent">Present</ng-container>
+          <ng-container *ngIf="!work.isCurrent">{{ work.endDate | date:'MMMM yyyy' }}</ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
   <button class="button-primary" (click)="openDialog()">Add Work Experience</button>
 </section>

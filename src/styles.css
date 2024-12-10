@@ -3,6 +3,7 @@
     --color-border-gray: #e0e0e0;
     --color-text-gray-blue: hsl(200, 20%, 33%);
     --color-gray-blue: hsl(200, 20%, 20%);
+    --color-destructive: hsl(0, 80%, 50%);
 }
 
 body {
@@ -23,7 +24,8 @@ body {
 }
 
 .button-primary,
-.button-outline {
+.button-outline,
+.button-icon {
     cursor: pointer;
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
@@ -50,6 +52,28 @@ body {
     background-color: var(--color-light-gray);
   }
 }
+
+.button-icon {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border: none;
+
+  &.destructive {
+    background-color: var(--color-destructive);
+    color: #fff;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+
 
 hr {
   margin-top: -1rem;
