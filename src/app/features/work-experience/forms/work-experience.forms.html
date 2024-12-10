@@ -1,0 +1,12 @@
+<form id="workExperienceForm" (ngSubmit)="submit()">
+  <div class="form-field">
+    <label for="company" [class.form-input-error-message]="invalidFields['company']">Company Name</label>
+    <input type="text" id="company" [class.form-input-error]="invalidFields['company']" name="company" [(ngModel)]="form.value.company" />
+    <span *ngIf="invalidFields['company']" class="form-input-error-message">{{ invalidFields['company']['required'] ? 'Company name is required' : '' }}</span>
+  </div>
+  <div class="form-field">
+    <label for="jobTitle" [class.form-input-error-message]="invalidFields['jobTitle']">Job Title</label>
+    <input type="text" id="jobTitle" [class.form-input-error]="invalidFields['jobTitle']" name="jobTitle" [(ngModel)]="form.value.jobTitle" />
+    <span *ngIf="invalidFields['jobTitle']" class="form-input-error-message">{{ invalidFields['jobTitle']['required'] ? 'Job title is required' : '' }}</span>
+  </div>
+</form>

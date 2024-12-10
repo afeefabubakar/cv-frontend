@@ -1,0 +1,14 @@
+<app-dialog [isOpen]="isOpen" [title]="'Work Experience'" [showCloseButton]="true" (closeDialog)="closeDialog()">
+  <app-work-experience-form #workExperienceForm [open]="isOpen" (onSubmit)="onSubmit($event)"></app-work-experience-form>
+  <div class="dialog-footer-buttons" dialog-footer>
+    <button class="button-outline" type="button" (click)="closeDialog()">Close</button>
+    <button class="button-primary" type="button" (click)="workExperienceForm.submit()">Submit</button>
+  </div>
+</app-dialog>
+
+<section *ngIf="selectedProfile">
+  <h2>Work Experience</h2>
+  <hr />
+  <p *ngIf="workExperience && workExperience.length === 0">No work experience added yet.</p>
+  <button class="button-primary" (click)="openDialog()">Add Work Experience</button>
+</section>
