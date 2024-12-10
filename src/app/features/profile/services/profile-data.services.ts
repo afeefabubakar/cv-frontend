@@ -9,6 +9,16 @@ import { environment } from '../../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ProfileDataService {
   listOfProfiles = signal<ProfileListItem[]>([]);
+  selectedProfile = signal('');
+  profile = computed(() => {
+    if (!this.selectedProfile()) return undefined;
+
+    return this.http
+      .get<QueryReturn<Profile>>(
+        environment.apiUrl + `/profile/${this.selectedProfile()}`
+      )
+      .pipe(switchMap((res) => of(res.data)));
+  });
 
   constructor(private http: HttpClient) {
     this.http
@@ -19,16 +29,4 @@ export class ProfileDataService {
         }
       });
   }
-
-  selectedProfile = signal('');
-
-  profile = computed(() => {
-    if (!this.selectedProfile()) return undefined;
-
-    return this.http
-      .get<QueryReturn<Profile>>(
-        environment.apiUrl + `/profile/${this.selectedProfile()}`
-      )
-      .pipe(switchMap((res) => of(res.data)));
-  });
 }

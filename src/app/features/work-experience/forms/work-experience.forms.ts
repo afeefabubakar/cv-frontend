@@ -27,6 +27,9 @@ export class WorkExperienceFormComponent {
   @Input() open: boolean = false;
   @Output() onSubmit: EventEmitter<WorkExperience> =
     new EventEmitter<WorkExperience>();
+  form: FormGroup;
+  invalidFields: { [key: string]: ValidationErrors } = {};
+
   constructor() {
     this.form = new FormGroup({
       company: new FormControl('', Validators.required),
@@ -59,7 +62,4 @@ export class WorkExperienceFormComponent {
     }
     this.onSubmit.emit(this.form.value);
   }
-
-  form: FormGroup;
-  invalidFields: { [key: string]: ValidationErrors } = {};
 }

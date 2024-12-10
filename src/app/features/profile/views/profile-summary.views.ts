@@ -10,7 +10,6 @@ import { NgIf } from '@angular/common';
 })
 export class ProfileSummaryComponent {
   private profileDataService: ProfileDataService = inject(ProfileDataService);
-
   profileSummary: string = '';
 
   constructor() {

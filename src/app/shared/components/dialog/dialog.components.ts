@@ -11,7 +11,6 @@ export class DialogComponent {
   @Input() isOpen: boolean = false;
   @Input() title: string = '';
   @Input() showCloseButton: boolean = true;
-
   @Output() closeDialog = new EventEmitter<void>();
 
   onClose(): void {
