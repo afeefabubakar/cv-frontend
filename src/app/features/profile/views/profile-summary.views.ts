@@ -15,11 +15,9 @@ export class ProfileSummaryComponent {
   constructor() {
     effect(() => {
       const profile = this.profileDataService.profile();
-      profile?.subscribe((profile) => {
-        if (profile) {
-          this.profileSummary = profile.summary;
-        }
-      });
+      if (profile) {
+        this.profileSummary = profile.summary;
+      }
     });
   }
 }

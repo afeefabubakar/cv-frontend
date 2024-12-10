@@ -30,20 +30,14 @@ export class AppHeader {
       const profile = this.profileDataService.profile();
 
       if (profile) {
-        profile.subscribe((profileData) => {
-          if (profileData && this.selectedProfile) {
-            this.fullName = `${profileData.firstName} ${profileData.lastName}`;
-            this.jobTitle = profileData.jobTitle;
-            this.location =
-              profileData.location.state.name +
-              ', ' +
-              profileData.location.country.name;
-            this.email = profileData.email;
-            this.phone = profileData.phone;
-          } else {
-            this.fullName = 'Please select a profile';
-          }
-        });
+        this.fullName = `${profile.firstName} ${profile.lastName}`;
+        this.jobTitle = profile.jobTitle;
+        this.location =
+          profile.location.state.name + ', ' + profile.location.country.name;
+        this.email = profile.email;
+        this.phone = profile.phone;
+      } else {
+        this.fullName = 'Please select a profile';
       }
     });
   }
