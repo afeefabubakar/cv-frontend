@@ -1,5 +1,5 @@
 <div class="dialog-overlay" *ngIf="isOpen" (click)="onOverlayClick($event)">
-  <div class="dialog-container" role="dialog" aria-modal="true">
+  <dialog class="dialog-container" role="dialog" aria-modal="true">
     <div class="dialog-header">
       <h2 class="dialog-title">{{ title }}</h2>
       <button 
@@ -18,5 +18,5 @@
     <div class="dialog-footer">
       <ng-content select="[dialog-footer]"></ng-content>
     </div>
-  </div>
+  </dialog>
 </div>
