@@ -27,5 +27,11 @@
 
 .work-experience-details {
   font-style: italic;
+  margin-top: 0.25rem;
   margin-bottom: 1rem;
+}
+
+.work-experience-actions {
+  display: flex;
+  gap: 0.25rem;
 }

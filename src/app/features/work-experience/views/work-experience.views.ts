@@ -1,11 +1,12 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, viewChild } from '@angular/core';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.components';
 import { WorkExperienceFormComponent } from '../forms/work-experience.forms';
 import { WorkExperience } from '../../../shared/types/profile';
 import { ProfileDataService } from '../../profile/services/profile-data.services';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { SvgIconComponent } from 'angular-svg-icon';
+import { WorkExperienceService } from '../services/work-experience.services';
 
 @Component({
   selector: 'app-work-experience',
@@ -13,7 +14,6 @@ import { SvgIconComponent } from 'angular-svg-icon';
     DialogComponent,
     WorkExperienceFormComponent,
     NgIf,
-    NgFor,
     DatePipe,
     SvgIconComponent,
   ],
@@ -22,9 +22,11 @@ import { SvgIconComponent } from 'angular-svg-icon';
 })
 export class WorkExperienceComponent {
   private profileDataService = inject(ProfileDataService);
+  private workExperienceService = inject(WorkExperienceService);
   isOpen: boolean = false;
   workExperience = signal<WorkExperience[]>([]);
   selectedProfile: string = '';
+  selectedWorkExperience = signal<WorkExperience | null>(null);
 
   constructor() {
     effect(() => {
@@ -39,23 +41,33 @@ export class WorkExperienceComponent {
   onSubmit(formValue: WorkExperience) {
     const newFormValue = {
       ...formValue,
+      isCurrent: Boolean(formValue.isCurrent),
       startDate: new Date(formValue.startDate),
       endDate: formValue.endDate ? new Date(formValue.endDate) : undefined,
     };
 
-    this.profileDataService.createWorkExperience(newFormValue);
+    if (this.selectedWorkExperience()) {
+      this.workExperienceService.updateWorkExperience(
+        this.selectedWorkExperience()!.id,
+        newFormValue
+      );
+    } else {
+      this.workExperienceService.createWorkExperience(newFormValue);
+    }
     this.closeDialog();
   }
 
   deleteWorkExperience(id: string) {
-    this.profileDataService.deleteWorkExperience(id);
+    this.workExperienceService.deleteWorkExperience(id);
   }
 
-  openDialog() {
+  openDialog(workExperience: WorkExperience | null = null) {
     this.isOpen = true;
+    this.selectedWorkExperience.set(workExperience);
   }
 
   closeDialog() {
     this.isOpen = false;
+    this.selectedWorkExperience.set(null);
   }
 }

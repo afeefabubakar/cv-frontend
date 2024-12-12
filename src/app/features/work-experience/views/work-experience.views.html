@@ -1,5 +1,5 @@
 <app-dialog [isOpen]="isOpen" [title]="'Work Experience'" [showCloseButton]="true" (closeDialog)="closeDialog()">
-  <app-work-experience-form #workExperienceForm [open]="isOpen" (onSubmit)="onSubmit($event)"></app-work-experience-form>
+  <app-work-experience-form #workExperienceForm [workExperience]="selectedWorkExperience()" [open]="isOpen" (onSubmit)="onSubmit($event)"></app-work-experience-form>
   <div class="dialog-footer-buttons" dialog-footer>
     <button class="button-outline" type="button" (click)="closeDialog()">Close</button>
     <button class="button-primary" type="button" (click)="workExperienceForm.submit()">Submit</button>
@@ -11,21 +11,38 @@
   <hr />
   <p *ngIf="workExperience() && workExperience().length === 0">No work experience added yet.</p>
   <div *ngIf="workExperience() && workExperience().length > 0">
-    <div *ngFor="let work of workExperience()">
-      <div class="work-experience-title">
-        <h3>{{ work.jobTitle }} | {{ work.company }}</h3>
-        <button (click)="deleteWorkExperience(work.id)" class="button-icon destructive">
-          <svg-icon src="icons/delete.svg" name="delete" class="icon"></svg-icon>
-        </button>
+    @for (work of workExperience(); track work.id) {
+      <article class="work-experience-item">
+        <div class="work-experience-title">
+          <h3>{{ work.jobTitle }} | {{ work.company }}</h3>
+          <div class="work-experience-actions">
+          <button (click)="openDialog(work)" class="button-icon">
+            <svg-icon src="icons/edit.svg" name="edit" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
+          </button>
+          <button (click)="deleteWorkExperience(work.id)" class="button-icon destructive">
+            <svg-icon src="icons/delete.svg" name="delete" class="icon" style="width: 1.2rem; height: 1.2rem;"></svg-icon>
+          </button>
+        </div>
       </div>
+
       <div class="work-experience-details">
-        <p>{{ work.location.state.name }}, {{ work.location.country.name }}</p>
-        <p>{{ work.startDate | date:'MMMM yyyy' }} - 
+        <p>{{ work.location.name === work.location.state.name ? work.location.name : work.location.name + ', ' + work.location.state.name }}, {{ work.location.country.name }}</p>
+        <p>{{ work.startDate | date:'MMM yyyy' }} - 
           <ng-container *ngIf="work.isCurrent">Present</ng-container>
-          <ng-container *ngIf="!work.isCurrent">{{ work.endDate | date:'MMMM yyyy' }}</ng-container>
+          <ng-container *ngIf="!work.isCurrent">{{ work.endDate | date:'MMM yyyy' }}</ng-container>
         </p>
       </div>
-    </div>
+
+      <div>
+        <p>Description:</p>
+        <ul class="work-experience-description">
+          @for (item of work.description; track $index) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+        </div>
+      </article>
+    }
   </div>
   <button class="button-primary" (click)="openDialog()">Add Work Experience</button>
 </section>

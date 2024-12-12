@@ -28,6 +28,7 @@ import { City, Country, State } from '../../../shared/types/location';
 })
 export class WorkExperienceFormComponent {
   @Input() open: boolean = false;
+  @Input() workExperience: WorkExperience | null = null;
   @Output() onSubmit: EventEmitter<WorkExperience> =
     new EventEmitter<WorkExperience>();
   form: FormGroup;
@@ -45,15 +46,18 @@ export class WorkExperienceFormComponent {
     });
 
     this.form = new FormGroup({
-      company: new FormControl('', Validators.required),
-      jobTitle: new FormControl('', Validators.required),
-      location: new FormControl('', Validators.required),
+      company: new FormControl(Validators.required),
+      jobTitle: new FormControl(Validators.required),
+      location: new FormControl(Validators.required),
       state: new FormControl(
         { value: '', disabled: true },
         Validators.required
       ),
       country: new FormControl(
-        { value: '', disabled: true },
+        {
+          value: '',
+          disabled: true,
+        },
         Validators.required
       ),
       startDate: new FormControl('', Validators.required),
@@ -85,10 +89,29 @@ export class WorkExperienceFormComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['open']) {
+    if (!changes['open'].currentValue) {
       this.form.reset();
       this.invalidFields = {};
       this.submitted = false;
+    }
+
+    if (changes['workExperience']) {
+      if (this.workExperience) {
+        this.form.patchValue({
+          ...this.workExperience,
+          startDate: new Date(this.workExperience.startDate)
+            .toISOString()
+            .slice(0, 10),
+          endDate: this.workExperience.endDate
+            ? new Date(this.workExperience.endDate).toISOString().slice(0, 10)
+            : undefined,
+          location: this.workExperience.location.id,
+          description: this.workExperience.description.forEach((desc, i) => {
+            if (i === 0) this.description.clear();
+            this.description.push(new FormControl(desc, Validators.required));
+          }),
+        });
+      }
     }
   }
 

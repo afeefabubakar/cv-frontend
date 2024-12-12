@@ -35,10 +35,10 @@ body {
     background-color: var(--color-gray-blue);
     color: #fff;
     border: none;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.1s ease-in-out;
 
     &:hover {
-        opacity: 0.95;
+        opacity: 0.8;
     }
 }
 
@@ -46,7 +46,7 @@ body {
   background-color: transparent;
   color: var(--color-gray-blue);
   border: 1px solid var(--color-gray-blue);
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.1s ease-in-out;
 
   &:hover {
     background-color: var(--color-light-gray);
@@ -61,15 +61,17 @@ body {
   align-items: center;
   justify-content: center;
   border: none;
+  background-color: var(--color-gray-blue);
+  color: #fff;
+  transition: opacity 0.1s ease-in-out;
 
   &.destructive {
     background-color: var(--color-destructive);
     color: #fff;
-    transition: opacity 0.2s ease-in-out;
+  }
 
-    &:hover {
-      opacity: 0.8;
-    }
+  &:hover {
+    opacity: 0.8;
   }
 }
 
