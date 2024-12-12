@@ -44,5 +44,5 @@
       </article>
     }
   </div>
-  <button class="button-primary" (click)="openDialog()">Add Work Experience</button>
+  <button *ngIf="workExperience() && workExperience().length < 3" class="button-primary" (click)="openDialog()">Add Work Experience</button>
 </section>
