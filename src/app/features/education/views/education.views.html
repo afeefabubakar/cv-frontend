@@ -1,0 +1,17 @@
+<app-dialog [isOpen]="isOpen" [title]="'Education'" [showCloseButton]="true" (closeDialog)="closeDialog()"></app-dialog>
+
+<section *ngIf="selectedProfile">
+  <h2>Education</h2>
+  <hr />
+  <p *ngIf="education() && education().length === 0">No education added yet.</p>
+
+  @for (education of education(); track education.id) {
+    <article class="education-item">
+      <h3>{{ education.degree }}</h3>
+      <p>{{ education.institute }}</p>
+      <p>{{ education.startDate | date:'MMM yyyy' }} - {{ education.endDate | date:'MMM yyyy' }}</p>
+    </article>
+  }
+
+  <button *ngIf="education() && education().length < 3" class="button-primary" (click)="openDialog()">Add Education</button>
+</section>

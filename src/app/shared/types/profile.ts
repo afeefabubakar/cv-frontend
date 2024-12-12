@@ -18,6 +18,7 @@ export interface Profile {
   updatedAt: Date;
   location: City;
   workExperiences: WorkExperience[];
+  educations: Education[];
 }
 
 export interface WorkExperience {
@@ -25,6 +26,20 @@ export interface WorkExperience {
   company: string;
   description: string[];
   jobTitle: string;
+  startDate: Date;
+  endDate?: Date;
+  isCurrent: boolean;
+  location: City;
+  profile: Profile;
+}
+
+export interface Education {
+  id: string;
+  institute: string;
+  degree: string;
+  cgpa: number;
+  awards: string[];
+  activities: string[];
   startDate: Date;
   endDate?: Date;
   isCurrent: boolean;
