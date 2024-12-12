@@ -71,24 +71,4 @@ export class ProfileDataService {
         console.log(res);
       });
   }
-
-  createWorkExperience(workExperience: WorkExperience) {
-    const url = new URL('api/work-experience', environment.apiUrl);
-    url.searchParams.set('profileId', this.selectedProfile());
-
-    this.http
-      .post<QueryReturn<WorkExperience>>(url.toString(), workExperience)
-      .subscribe((res) => {
-        if (res.message === 'Work experience created successfully') {
-          this.refetchProfile.set(true);
-        }
-      });
-  }
-
-  deleteWorkExperience(id: string) {
-    const url = new URL(`api/work-experience/${id}`, environment.apiUrl);
-    this.http.delete(url.toString()).subscribe((res) => {
-      this.refetchProfile.set(true);
-    });
-  }
 }
