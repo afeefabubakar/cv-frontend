@@ -1,4 +1,10 @@
-<app-dialog [isOpen]="isOpen" [title]="'Education'" [showCloseButton]="true" (closeDialog)="closeDialog()"></app-dialog>
+<app-dialog [isOpen]="isOpen" [title]="'Education'" [showCloseButton]="true" (closeDialog)="closeDialog()">
+  <app-education-form #educationForm [open]="isOpen" [education]="selectedEducation()" (onSubmit)="onSubmit($event)"></app-education-form>
+  <div class="dialog-footer-buttons" dialog-footer>
+    <button class="button-outline" type="button" (click)="closeDialog()">Close</button>
+    <button class="button-primary" type="button" (click)="educationForm.submit()">Submit</button>
+  </div>
+</app-dialog>
 
 <section *ngIf="selectedProfile">
   <h2>Education</h2>
@@ -7,9 +13,28 @@
 
   @for (education of education(); track education.id) {
     <article class="education-item">
-      <h3>{{ education.degree }}</h3>
-      <p>{{ education.institute }}</p>
-      <p>{{ education.startDate | date:'MMM yyyy' }} - {{ education.endDate | date:'MMM yyyy' }}</p>
+      <div class="education-item-title">
+        <h3>{{ education.institute }} | {{ education.degree }}</h3>
+        <div class="education-item-actions">
+          <button class="button-icon" (click)="openDialog(education)">
+            <svg-icon name="edit" src="icons/edit.svg" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
+          </button>
+          <button class="button-icon destructive" (click)="deleteEducation(education.id)">
+            <svg-icon name="delete" src="icons/delete.svg" class="icon" style="width: 1.2rem; height: 1.2rem;"></svg-icon>
+          </button>
+        </div>
+      </div>
+      <div class="education-item-details">
+        <p>{{ education.location.name === education.location.state.name ? education.location.name : education.location.name + ', ' + education.location.state.name }}{{ ', ' + education.location.country.name }}</p>
+        <p>{{ education.startDate | date:'yyyy' }} - {{ education.endDate | date:'yyyy' }}</p>
+      </div>
+      <p>CGPA: {{ education.cgpa }}{{ education.awards.length > 0 ? ', ' + education.awards.join(', ') : '' }}</p>
+      <p>Activities:</p>
+      <ul>
+        @for (activity of education.activities; track activity) {
+          <li>{{ activity }}</li>
+        }
+      </ul>
     </article>
   }
 

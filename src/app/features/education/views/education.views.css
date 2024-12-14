@@ -1,0 +1,27 @@
+.education-item-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.education-item-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.education-item-details {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+
+  p {
+    margin: 0;
+  }
+}

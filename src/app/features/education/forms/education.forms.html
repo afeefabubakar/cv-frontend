@@ -1,0 +1,95 @@
+<form id="educationForm" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-field">
+        <label for="institute">Institute</label>
+        <input type="text" id="institute" formControlName="institute" />
+    </div>
+    <div class="form-field">
+        <label for="degree">Degree</label>
+        <input type="text" id="degree" formControlName="degree" />
+    </div>
+    <div class="form-field">
+        <label for="cgpa">CGPA</label>
+        <input type="number" id="cgpa" formControlName="cgpa" min="0" max="4" step="0.01" />
+    </div>
+    <div class="form-field">
+        <label for="awards">Awards</label>
+        @for (award of awards.controls; track $index; let i = $index) {
+            <div class="form-field-array" formArrayName="awards">
+                <div class="row">
+                    <input type="text" [formControlName]="i" />
+                    <button type="button" (click)="removeAward(i)">
+                        Remove
+                    </button>
+                </div>
+                <span *ngIf="submitted && awards.at(i).errors?.['required']" class="form-input-error-message">
+                    Award is required
+                </span>
+            </div>
+        }
+        <button type="button" class="button-outline" (click)="addAward()">
+            Add Award
+        </button>
+    </div>
+    <div class="form-field">
+        <label for="activities">Activities</label>
+        @for (activity of activities.controls; track $index; let i = $index) {
+            <div class="form-field-array" formArrayName="activities">
+                <div class="row">
+                    <input type="text" [formControlName]="i" />
+                    <button type="button" (click)="removeActivity(i)">
+                        Remove
+                    </button>
+                </div>
+                <span *ngIf="submitted && activities.at(i).errors?.['required']" class="form-input-error-message">
+                    Activity is required
+                </span>
+            </div>
+        }
+        <button type="button" class="button-outline" (click)="addActivity()">
+            Add Activity
+        </button>
+    </div>
+    <div class="form-field">
+        <label for="location">Location</label>
+        <select id="location" formControlName="location">
+            @for (city of listOfLocations.cities; track city.id) {
+                <option [value]="city.id">{{ city.name }}</option>
+            }
+        </select>
+        <span *ngIf="invalidFields['location']" class="form-input-error-message">{{ invalidFields['location']['required'] ? 'Location is required' : '' }}</span>
+    </div>
+    <div class="form-field">
+        <label for="state">State</label>
+        <select id="state" formControlName="state">
+            @for (state of listOfLocations.states; track state.id) {
+                <option [value]="state.id">{{ state.name }}</option>
+            }
+        </select>
+        <span *ngIf="invalidFields['state']" class="form-input-error-message">{{ invalidFields['state']['required'] ? 'State is required' : '' }}</span>
+    </div>
+    <div class="form-field">
+        <label for="country">Country</label>
+        <select id="country" formControlName="country">
+            @for (country of listOfLocations.countries; track country.id) {
+                <option [value]="country.id">{{ country.name }}</option>
+            }
+        </select>
+        <span *ngIf="invalidFields['country']" class="form-input-error-message">{{ invalidFields['country']['required'] ? 'Country is required' : '' }}</span>
+    </div>
+    <div>
+        <div class="parallel-form-field">
+            <div class="form-field">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" formControlName="startDate" />
+            </div>
+            <div class="form-field">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" formControlName="endDate" />
+            </div>
+        </div>
+        <div class="form-checkbox">
+            <label for="isCurrent">Currently studying here</label>
+            <input type="checkbox" id="isCurrent" formControlName="isCurrent" />
+        </div>
+    </div>
+</form>

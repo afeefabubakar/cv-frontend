@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { ProfileDataService } from '../../profile/services/profile-data.services';
 import { Education } from '../../../shared/types/profile';
 import { QueryReturn } from '../../../shared/types';
+
 @Injectable({ providedIn: 'root' })
 export class EducationServices {
   constructor(
