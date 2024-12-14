@@ -128,7 +128,6 @@ export class WorkExperienceFormComponent {
         },
         {} as { [key: string]: ValidationErrors }
       );
-      console.log(this.invalidFields);
       return;
     }
     this.onSubmit.emit(this.form.value);
