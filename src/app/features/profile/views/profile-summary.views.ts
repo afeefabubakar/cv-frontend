@@ -1,6 +1,7 @@
 import { Component, effect, inject } from '@angular/core';
 import { ProfileDataService } from '../services/profile-data.services';
 import { NgIf } from '@angular/common';
+import { Profile } from '../../../shared/types/profile';
 
 @Component({
   selector: 'app-profile-summary',
@@ -10,14 +11,11 @@ import { NgIf } from '@angular/common';
 })
 export class ProfileSummaryComponent {
   private profileDataService: ProfileDataService = inject(ProfileDataService);
-  profileSummary: string = '';
+  profile: Profile | undefined = undefined;
 
   constructor() {
     effect(() => {
-      const profile = this.profileDataService.profile();
-      if (profile) {
-        this.profileSummary = profile.summary;
-      }
+      this.profile = this.profileDataService.profile();
     });
   }
 }

@@ -7,15 +7,22 @@
 </app-dialog>
 
 <header>
-    <select [value]="selectedProfile" (change)="onProfileSelect($event)">
-        <option value="" [disabled]="selectedProfile">Select a profile</option>
-        @for (profileListItem of listOfProfiles; track profileListItem.id) {
-            <option value="{{ profileListItem.id }}">{{ profileListItem.firstName }} {{ profileListItem.lastName }}</option>
-        }
-    </select>
+    <div class="profile-select-box">
+        <select [value]="selectedProfile" (change)="onProfileSelect($event)">
+            <option value="" [disabled]="selectedProfile">Select a profile</option>
+            @for (profileListItem of listOfProfiles; track profileListItem.id) {
+                <option value="{{ profileListItem.id }}">{{ profileListItem.firstName }} {{ profileListItem.lastName }}</option>
+            }
+        </select>
+        <button class="button-icon" (click)="addProfile()">+</button>
+    </div>
 
     <div class="title-box">
-        <h1>{{ fullName }}</h1>
+        @if (profile) {
+            <h1>{{ profile.firstName }} {{ profile.lastName }}</h1>
+        } @else {
+            <h1>Please select a profile</h1>
+        }
         @if (selectedProfile) {
             <div class="button-box">
                 @if (!isLocked) {
@@ -31,10 +38,10 @@
             </div>
         }
     </div>
-    <h2>{{ jobTitle }}</h2>
-    <ul *ngIf="location || email || phone" class="contact-details">
-        <li><svg-icon src="icons/location.svg" name="location" class="icon"></svg-icon> {{ location }}</li>
-        <li><svg-icon src="icons/email.svg" name="email" class="icon"></svg-icon> <a [href]="'mailto:' + email">{{ email }}</a></li>
-        <li><svg-icon src="icons/phone.svg" name="phone" class="icon"></svg-icon> <a [href]="'tel:' + phone">{{ phone }}</a></li>
+    <h2>{{ profile?.jobTitle }}</h2>
+    <ul *ngIf="profile?.location || profile?.email || profile?.phone" class="contact-details">
+        <li><svg-icon src="icons/location.svg" name="location" class="icon"></svg-icon> {{ profile?.location?.state?.name }}, {{ profile?.location?.country?.name }}</li>
+        <li><svg-icon src="icons/email.svg" name="email" class="icon"></svg-icon> <a [href]="'mailto:' + profile?.email">{{ profile?.email }}</a></li>
+        <li><svg-icon src="icons/phone.svg" name="phone" class="icon"></svg-icon> <a [href]="'tel:' + profile?.phone">{{ profile?.phone }}</a></li>
     </ul>
 </header>

@@ -46,7 +46,17 @@ export class ProfileFormComponent {
           phone: this.profile.phone,
           summary: this.profile.summary,
         });
+      } else {
+        this.form.reset();
       }
+
+      this.form.get('location')?.valueChanges.subscribe((location) => {
+        const selectedCity = this.listOfLocations.cities.find(
+          (c) => c.id === location
+        );
+        this.form.get('state')?.setValue(selectedCity?.stateId);
+        this.form.get('country')?.setValue(selectedCity?.countryId);
+      });
     });
 
     this.form = new FormGroup({

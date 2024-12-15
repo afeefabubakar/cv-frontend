@@ -22,11 +22,7 @@ export class AppHeader {
   private profileDataService: ProfileDataService = inject(ProfileDataService);
   listOfProfiles: ProfileListItem[] = [];
   selectedProfile = '';
-  fullName = 'Please select a profile';
-  jobTitle = '';
-  location = '';
-  email = '';
-  phone = '';
+  profile: Profile | undefined = undefined;
   isOpen = false;
   isLocked = false;
 
@@ -35,19 +31,14 @@ export class AppHeader {
       this.listOfProfiles = this.profileDataService.listOfProfiles();
       this.isLocked = this.profileDataService.isLocked();
       this.selectedProfile = this.profileDataService.selectedProfile();
-      const profile = this.profileDataService.profile();
-
-      if (profile) {
-        this.fullName = `${profile.firstName} ${profile.lastName}`;
-        this.jobTitle = profile.jobTitle;
-        this.location =
-          profile.location.state.name + ', ' + profile.location.country.name;
-        this.email = profile.email;
-        this.phone = profile.phone;
-      } else {
-        this.fullName = 'Please select a profile';
-      }
+      this.profile = this.profileDataService.profile();
     });
+  }
+
+  addProfile() {
+    this.profileDataService.selectedProfile.set('');
+    this.profileDataService.profileData.set(undefined);
+    this.openDialog();
   }
 
   onProfileSelect(event: Event) {
@@ -56,7 +47,11 @@ export class AppHeader {
   }
 
   onSubmit(profile: Profile) {
-    this.profileDataService.updateProfile(profile);
+    if (this.selectedProfile) {
+      this.profileDataService.updateProfile(profile);
+    } else {
+      this.profileDataService.addProfile(profile);
+    }
     this.closeDialog();
   }
 

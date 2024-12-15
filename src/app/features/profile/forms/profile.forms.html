@@ -3,7 +3,7 @@
         <label for="firstName" [class.form-input-error-message]="form.get('firstName')?.errors">First Name</label>
         <input type="text" id="firstName" formControlName="firstName" [class.form-input-error]="form.get('firstName')?.errors">
         @if (form.get('firstName')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('firstName')?.errors">
                 {{ form.get('firstName')?.errors?.['required'] ? 'First Name is required' : '' }}
             </div>
         }
@@ -12,7 +12,7 @@
         <label for="lastName" [class.form-input-error-message]="form.get('lastName')?.errors">Last Name</label>
         <input type="text" id="lastName" formControlName="lastName" [class.form-input-error]="form.get('lastName')?.errors">
         @if (form.get('lastName')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('lastName')?.errors">
                 {{ form.get('lastName')?.errors?.['required'] ? 'Last Name is required' : '' }}
             </div>
         }
@@ -21,7 +21,7 @@
         <label for="jobTitle" [class.form-input-error-message]="form.get('jobTitle')?.errors">Job Title</label>
         <input type="text" id="jobTitle" formControlName="jobTitle" [class.form-input-error]="form.get('jobTitle')?.errors">
         @if (form.get('jobTitle')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('jobTitle')?.errors">
                 {{ form.get('jobTitle')?.errors?.['required'] ? 'Job Title is required' : '' }}
             </div>
         }
@@ -30,7 +30,7 @@
         <label for="email" [class.form-input-error-message]="form.get('email')?.errors">Email</label>
         <input type="email" id="email" formControlName="email" [class.form-input-error]="form.get('email')?.errors">
         @if (form.get('email')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('email')?.errors">
                 {{ form.get('email')?.errors?.['required'] ? 'Email is required' : '' }}
             </div>
         }
@@ -39,7 +39,7 @@
         <label for="phone" [class.form-input-error-message]="form.get('phone')?.errors">Phone</label>
         <input type="tel" id="phone" formControlName="phone" [class.form-input-error]="form.get('phone')?.errors">
         @if (form.get('phone')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('phone')?.errors">
                 {{ form.get('phone')?.errors?.['required'] ? 'Phone is required' : '' }}
             </div>
         }
@@ -52,7 +52,7 @@
             }
         </select>
         @if (form.get('location')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('location')?.errors">
                 {{ form.get('location')?.errors?.['required'] ? 'Location is required' : '' }}
             </div>
         }
@@ -65,7 +65,7 @@
             }
         </select>
         @if (form.get('state')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('state')?.errors">
                 {{ form.get('state')?.errors?.['required'] ? 'State is required' : '' }}
             </div>
         }
@@ -78,7 +78,7 @@
             }
         </select>
         @if (form.get('country')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('country')?.errors">
                 {{ form.get('country')?.errors?.['required'] ? 'Country is required' : '' }}
             </div>
         }
@@ -87,7 +87,7 @@
         <label for="summary" [class.form-input-error-message]="form.get('summary')?.errors">Summary</label>
         <textarea id="summary" [class.form-input-error]="form.get('summary')?.errors" formControlName="summary" ></textarea>
         @if (form.get('summary')?.errors) {
-            <div class="error">
+            <div [class.form-input-error-message]="form.get('summary')?.errors">
                 {{ form.get('summary')?.errors?.['required'] ? 'Summary is required' : '' }}
             </div>
         }
