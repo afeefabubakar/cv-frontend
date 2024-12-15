@@ -5,6 +5,7 @@ import { ProfileSkillViews } from './features/skill/views/profile-skill.views';
 import { ProfileSummaryComponent } from './features/profile/views/profile-summary.views';
 import { RouterOutlet } from '@angular/router';
 import { WorkExperienceComponent } from './features/work-experience/views/work-experience.views';
+import { MiscViewsComponent } from './features/misc/views/misc/misc.views';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { WorkExperienceComponent } from './features/work-experience/views/work-e
     WorkExperienceComponent,
     EducationComponent,
     ProfileSkillViews,
+    MiscViewsComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

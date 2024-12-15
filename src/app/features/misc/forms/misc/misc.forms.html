@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-field">
+    <label for="label" [class.form-input-error-message]="invalidFields['label']">Label</label>
+    <input id="label" [class.form-input-error]="invalidFields['label']" formControlName="label" />
+    @if (invalidFields['label']) {
+      <span class="form-input-error-message">{{ invalidFields['label']['required'] ? 'Label is required' : '' }}</span>
+    }
+  </div>
+  <div class="form-field">
+    <label for="value" [class.form-input-error-message]="invalidFields['value']">Value</label>
+    <input id="value" [class.form-input-error]="invalidFields['value']" formControlName="value" />
+    @if (invalidFields['value']) {
+      <span class="form-input-error-message">{{ invalidFields['value']['required'] ? 'Value is required' : '' }}</span>
+    }
+  </div>
+</form>
+

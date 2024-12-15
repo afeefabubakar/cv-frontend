@@ -1,0 +1,34 @@
+<app-dialog [isOpen]="isOpen" (close)="closeDialog()" title="Others">
+    <app-misc-form #miscForm [isOpen]="isOpen" (onSubmit)="addMisc($event)"></app-misc-form>
+
+    <div dialog-footer class="dialog-footer-buttons">
+        <button class="button-secondary" (click)="closeDialog()">Cancel</button>
+        <button class="button-primary" (click)="miscForm.submit()">Add</button>
+    </div>
+</app-dialog>
+
+@if (selectedProfile) {
+<section>
+    <h2>Others</h2>
+    <hr />
+    @if (misc.length > 0) {
+        @for (m of misc; track m.id) {
+            <div class="misc-item">
+                <div class="misc-item-details">
+                    <p>{{ m.item['label'] }}{{ m.item['value'] ? ':' : '' }}</p>
+
+                    @if (m.item['value'].includes('http')) {
+                        <a href="{{ m.item['value'] }}" target="_blank">{{ m.item['value'] }}</a>
+                    } @else {
+                        <p>{{ m.item['value'] }}</p>
+                    }
+                </div>
+                <button class="button-icon destructive" (click)="deleteMisc(m.id)"><svg-icon name="delete" src="icons/delete.svg" class="icon"></svg-icon></button>
+            </div>
+        }
+    } @else {
+        <p>No items found</p>
+    }
+    <button class="button-primary" (click)="openDialog()">Add item</button>
+</section>
+}
