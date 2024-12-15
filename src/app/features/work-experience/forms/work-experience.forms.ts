@@ -2,6 +2,7 @@ import {
   Component,
   effect,
   EventEmitter,
+  inject,
   Input,
   Output,
   SimpleChanges,
@@ -24,7 +25,6 @@ import { City, Country, State } from '../../../shared/types/location';
   imports: [ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './work-experience.forms.html',
   styleUrl: './work-experience.forms.css',
-  providers: [LocationService],
 })
 export class WorkExperienceFormComponent {
   @Input() open: boolean = false;
@@ -34,13 +34,15 @@ export class WorkExperienceFormComponent {
   form: FormGroup;
   invalidFields: { [key: string]: ValidationErrors } = {};
   submitted = false;
+
+  private locationService = inject(LocationService);
   listOfLocations: { cities: City[]; states: State[]; countries: Country[] } = {
     cities: [],
     states: [],
     countries: [],
   };
 
-  constructor(private locationService: LocationService) {
+  constructor() {
     effect(() => {
       this.listOfLocations = this.locationService.listOfLocations();
     });

@@ -14,21 +14,19 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { EducationServices } from '../services/education.services';
-import { NgIf } from '@angular/common';
-import { Country } from '../../../shared/types/location';
-import { State } from '../../../shared/types/location';
 import { City } from '../../../shared/types/location';
-import { LocationService } from '../../location/services/location.services';
+import { Country } from '../../../shared/types/location';
 import { Education } from '../../../shared/types/profile';
+import { FormGroup } from '@angular/forms';
+import { LocationService } from '../../location/services/location.services';
+import { NgIf } from '@angular/common';
+import { State } from '../../../shared/types/location';
 
 @Component({
   selector: 'app-education-form',
   imports: [ReactiveFormsModule, NgIf],
   templateUrl: './education.forms.html',
   styleUrl: './education.forms.css',
-  providers: [LocationService],
 })
 export class EducationFormComponent {
   @Input() open: boolean = false;
@@ -37,13 +35,15 @@ export class EducationFormComponent {
   form: FormGroup;
   submitted = false;
   invalidFields: { [key: string]: ValidationErrors } = {};
+
+  private locationService = inject(LocationService);
   listOfLocations: { cities: City[]; states: State[]; countries: Country[] } = {
     cities: [],
     states: [],
     countries: [],
   };
 
-  constructor(private locationService: LocationService) {
+  constructor() {
     effect(() => {
       this.listOfLocations = this.locationService.listOfLocations();
     });
