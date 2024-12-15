@@ -1,17 +1,25 @@
 import { Component, inject, effect } from '@angular/core';
 import { ProfileDataService } from '../../features/profile/services/profile-data.services';
-import { ProfileListItem } from '../../shared/types/profile';
+import { Profile, ProfileListItem } from '../../shared/types/profile';
 import { AngularSvgIconModule, SvgIconComponent } from 'angular-svg-icon';
 import { NgIf } from '@angular/common';
+import { ProfileFormComponent } from '../../features/profile/forms/profile.forms';
+import { DialogComponent } from '../../shared/components/dialog/dialog.components';
 
 @Component({
   selector: 'app-header',
-  imports: [AngularSvgIconModule, NgIf, SvgIconComponent],
+  imports: [
+    AngularSvgIconModule,
+    NgIf,
+    SvgIconComponent,
+    ProfileFormComponent,
+    DialogComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
 export class AppHeader {
-  profileDataService: ProfileDataService = inject(ProfileDataService);
+  private profileDataService: ProfileDataService = inject(ProfileDataService);
   listOfProfiles: ProfileListItem[] = [];
   selectedProfile = '';
   fullName = 'Please select a profile';
@@ -19,13 +27,13 @@ export class AppHeader {
   location = '';
   email = '';
   phone = '';
+  isOpen = false;
+  isLocked = false;
 
   constructor() {
     effect(() => {
       this.listOfProfiles = this.profileDataService.listOfProfiles();
-    });
-
-    effect(() => {
+      this.isLocked = this.profileDataService.isLocked();
       this.selectedProfile = this.profileDataService.selectedProfile();
       const profile = this.profileDataService.profile();
 
@@ -47,7 +55,20 @@ export class AppHeader {
     this.profileDataService.selectedProfile.set(value);
   }
 
+  onSubmit(profile: Profile) {
+    this.profileDataService.updateProfile(profile);
+    this.closeDialog();
+  }
+
   toggleLock() {
     this.profileDataService.setProfileLock(!this.profileDataService.isLocked());
+  }
+
+  openDialog() {
+    this.isOpen = true;
+  }
+
+  closeDialog() {
+    this.isOpen = false;
   }
 }

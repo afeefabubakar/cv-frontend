@@ -1,0 +1,95 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-field">
+        <label for="firstName" [class.form-input-error-message]="form.get('firstName')?.errors">First Name</label>
+        <input type="text" id="firstName" formControlName="firstName" [class.form-input-error]="form.get('firstName')?.errors">
+        @if (form.get('firstName')?.errors) {
+            <div class="error">
+                {{ form.get('firstName')?.errors?.['required'] ? 'First Name is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="lastName" [class.form-input-error-message]="form.get('lastName')?.errors">Last Name</label>
+        <input type="text" id="lastName" formControlName="lastName" [class.form-input-error]="form.get('lastName')?.errors">
+        @if (form.get('lastName')?.errors) {
+            <div class="error">
+                {{ form.get('lastName')?.errors?.['required'] ? 'Last Name is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="jobTitle" [class.form-input-error-message]="form.get('jobTitle')?.errors">Job Title</label>
+        <input type="text" id="jobTitle" formControlName="jobTitle" [class.form-input-error]="form.get('jobTitle')?.errors">
+        @if (form.get('jobTitle')?.errors) {
+            <div class="error">
+                {{ form.get('jobTitle')?.errors?.['required'] ? 'Job Title is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="email" [class.form-input-error-message]="form.get('email')?.errors">Email</label>
+        <input type="email" id="email" formControlName="email" [class.form-input-error]="form.get('email')?.errors">
+        @if (form.get('email')?.errors) {
+            <div class="error">
+                {{ form.get('email')?.errors?.['required'] ? 'Email is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="phone" [class.form-input-error-message]="form.get('phone')?.errors">Phone</label>
+        <input type="tel" id="phone" formControlName="phone" [class.form-input-error]="form.get('phone')?.errors">
+        @if (form.get('phone')?.errors) {
+            <div class="error">
+                {{ form.get('phone')?.errors?.['required'] ? 'Phone is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="location" [class.form-input-error-message]="form.get('location')?.errors">City</label>
+        <select id="location" [class.form-input-error]="form.get('location')?.errors" formControlName="location">
+            @for (city of listOfLocations.cities; track city.id) {
+                <option [value]="city.id">{{ city.name }}</option>
+            }
+        </select>
+        @if (form.get('location')?.errors) {
+            <div class="error">
+                {{ form.get('location')?.errors?.['required'] ? 'Location is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="state" [class.form-input-error-message]="form.get('state')?.errors">State</label>
+        <select id="state" [class.form-input-error]="form.get('state')?.errors" formControlName="state">
+            @for (state of listOfLocations.states; track state.id) {
+                <option [value]="state.id">{{ state.name }}</option>
+            }
+        </select>
+        @if (form.get('state')?.errors) {
+            <div class="error">
+                {{ form.get('state')?.errors?.['required'] ? 'State is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="country" [class.form-input-error-message]="form.get('country')?.errors">Country</label>
+        <select id="country" [class.form-input-error]="form.get('country')?.errors" formControlName="country">
+            @for (country of listOfLocations.countries; track country.id) {
+                <option [value]="country.id">{{ country.name }}</option>
+            }
+        </select>
+        @if (form.get('country')?.errors) {
+            <div class="error">
+                {{ form.get('country')?.errors?.['required'] ? 'Country is required' : '' }}
+            </div>
+        }
+    </div>
+    <div class="form-field">
+        <label for="summary" [class.form-input-error-message]="form.get('summary')?.errors">Summary</label>
+        <textarea id="summary" [class.form-input-error]="form.get('summary')?.errors" formControlName="summary" ></textarea>
+        @if (form.get('summary')?.errors) {
+            <div class="error">
+                {{ form.get('summary')?.errors?.['required'] ? 'Summary is required' : '' }}
+            </div>
+        }
+    </div>
+</form>

@@ -61,3 +61,8 @@ h2 {
     justify-content: space-between;
     align-items: center;
 }
+
+.button-box {
+    display: flex;
+    gap: 0.25rem;
+}

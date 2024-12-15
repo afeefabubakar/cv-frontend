@@ -1,5 +1,13 @@
+<app-dialog [isOpen]="isOpen" (closeDialog)="closeDialog()" [title]="selectedProfile ? 'Edit Profile' : 'Create Profile'">
+    <app-profile-form #profileForm (onSubmit)="onSubmit($event)"></app-profile-form>
+    <div dialog-footer class="dialog-footer-buttons">
+        <button class="button-outline" (click)="profileForm.form.reset()">Cancel</button>
+        <button class="button-primary" (click)="profileForm.submit()">Save</button>
+    </div>
+</app-dialog>
+
 <header>
-    <select [value]="profileDataService.selectedProfile()" (change)="onProfileSelect($event)">
+    <select [value]="selectedProfile" (change)="onProfileSelect($event)">
         <option value="" [disabled]="selectedProfile">Select a profile</option>
         @for (profileListItem of listOfProfiles; track profileListItem.id) {
             <option value="{{ profileListItem.id }}">{{ profileListItem.firstName }} {{ profileListItem.lastName }}</option>
@@ -8,14 +16,19 @@
 
     <div class="title-box">
         <h1>{{ fullName }}</h1>
-        @if (profileDataService.selectedProfile()) {
-            <button class="lock-button button-icon" (click)="toggleLock()">
-                @if (!profileDataService.isLocked()) {
-                    <svg-icon src="icons/locked.svg" name="locked" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
-                } @else {
-                    <svg-icon src="icons/unlocked.svg" name="unlocked" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
+        @if (selectedProfile) {
+            <div class="button-box">
+                @if (!isLocked) {
+                    <button class="button-icon" (click)="openDialog()"><svg-icon src="icons/edit.svg" name="edit" class="icon" style="width: 1rem; height: 1rem;"></svg-icon></button>
                 }
-            </button>
+                <button class="lock-button button-icon" (click)="toggleLock()">
+                    @if (!isLocked) {
+                        <svg-icon src="icons/locked.svg" name="locked" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
+                    } @else {
+                        <svg-icon src="icons/unlocked.svg" name="unlocked" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
+                    }
+                </button>
+            </div>
         }
     </div>
     <h2>{{ jobTitle }}</h2>
