@@ -23,6 +23,7 @@ export interface Profile {
     id: string;
     skill: Skill;
   }[];
+  misc: Misc[];
 }
 
 export interface WorkExperience {
