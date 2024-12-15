@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Misc } from '../../../shared/types/profile';
 import { ProfileDataService } from '../../profile/services/profile-data.services';
-import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
