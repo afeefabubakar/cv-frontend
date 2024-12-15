@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:4400/api',
+  apiUrl: 'https://cv-backend-x4bc.onrender.com/api',
 };
