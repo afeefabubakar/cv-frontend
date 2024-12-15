@@ -19,6 +19,10 @@ export interface Profile {
   location: City;
   workExperiences: WorkExperience[];
   educations: Education[];
+  ProfileSkill: {
+    id: string;
+    skill: Skill;
+  }[];
 }
 
 export interface WorkExperience {
@@ -45,4 +49,10 @@ export interface Education {
   isCurrent: boolean;
   location: City;
   profile: Profile;
+}
+
+export interface Skill {
+  id: string;
+  skill: string;
+  category: string;
 }
