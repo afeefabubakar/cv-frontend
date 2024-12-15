@@ -17,10 +17,12 @@
                 <div class="misc-item-details">
                     <p>{{ m.item['label'] }}{{ m.item['value'] ? ':' : '' }}</p>
 
-                    @if (m.item['value'].includes('http')) {
-                        <a href="{{ m.item['value'] }}" target="_blank">{{ m.item['value'] }}</a>
-                    } @else {
-                        <p>{{ m.item['value'] }}</p>
+                    @if (m.item['value']) {
+                        @if (m.item['value'].includes('http')) {
+                            <a href="{{ m.item['value'] }}" target="_blank">{{ m.item['value'] }}</a>
+                        } @else {
+                            <p>{{ m.item['value'] }}</p>
+                        }
                     }
                 </div>
                 @if (!isLocked) {
