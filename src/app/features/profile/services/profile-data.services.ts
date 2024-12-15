@@ -68,7 +68,7 @@ export class ProfileDataService {
         profile
       )
       .subscribe((res) => {
-        console.log(res);
+        this.refetchProfile.set(true);
       });
   }
 }
