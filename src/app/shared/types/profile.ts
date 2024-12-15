@@ -56,3 +56,9 @@ export interface Skill {
   skill: string;
   category: string;
 }
+
+export interface Misc {
+  id: string;
+  item: Record<string, string>;
+  profileId: string;
+}
