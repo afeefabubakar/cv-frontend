@@ -8,7 +8,14 @@ import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileDataService {
-  listOfProfiles = signal<ProfileListItem[]>([]);
+  listOfProfilesData = signal<ProfileListItem[]>([]);
+  refetchProfiles = signal(false);
+  listOfProfiles = computed(() => {
+    if (this.refetchProfiles()) {
+      this.fetchProfiles();
+    }
+    return this.listOfProfilesData();
+  });
   selectedProfile = signal('');
   refetchProfile = signal(false);
   profileData = signal<Profile | undefined>(undefined);
@@ -27,13 +34,7 @@ export class ProfileDataService {
   });
 
   constructor(private http: HttpClient) {
-    this.http
-      .get<QueryReturn<ProfileListItem[]>>(environment.apiUrl + '/profile')
-      .subscribe((res) => {
-        if (res.data) {
-          this.listOfProfiles.set(res.data);
-        }
-      });
+    this.fetchProfiles();
 
     effect(() => {
       const profileId = this.selectedProfile();
@@ -45,22 +46,39 @@ export class ProfileDataService {
     });
   }
 
-  private fetchProfileData() {
-    if (!this.selectedProfile()) {
-      this.profileData.set(undefined);
-      return;
-    }
+  private fetchProfiles() {
+    this.getProfiles().subscribe((res) => {
+      if (res) {
+        this.listOfProfilesData.set(res);
+      }
+    });
+  }
 
+  private fetchProfileData() {
     this.getProfile(this.selectedProfile()).subscribe((profile) => {
       this.profileData.set(profile);
       this.refetchProfile.set(false);
     });
   }
 
+  getProfiles() {
+    return this.http
+      .get<QueryReturn<ProfileListItem[]>>(environment.apiUrl + '/profile')
+      .pipe(switchMap((res) => of(res.data)));
+  }
+
   getProfile(profileId: string) {
     return this.http
       .get<QueryReturn<Profile>>(environment.apiUrl + `/profile/${profileId}`)
       .pipe(switchMap((res) => of(res.data)));
+  }
+
+  addProfile(profile: Partial<Profile>) {
+    this.http
+      .post<QueryReturn<Profile>>(environment.apiUrl + '/profile', profile)
+      .subscribe((res) => {
+        this.refetchProfile.set(true);
+      });
   }
 
   updateProfile(profile: Partial<Profile>) {
