@@ -1,0 +1,40 @@
+.skill-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.skill-badge {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border: 1px solid var(--color-gray-blue);
+    color: var(--color-gray-blue);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.delete-skill {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.icon {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+.skill-select-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+}
+
+.skill-select {
+  flex: 1;
+}

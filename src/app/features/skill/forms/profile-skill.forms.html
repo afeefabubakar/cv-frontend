@@ -1,0 +1,35 @@
+<app-dialog [isOpen]="isOpen" (close)="closeDialog()" title="Skill">
+    <app-skill-form #skillForm (onSubmit)="addSkill($event)"></app-skill-form>
+
+  <div class="dialog-footer-buttons" dialog-footer>
+    <button class="button-outline" (click)="closeDialog()">Close</button>
+    <button class="button-primary" (click)="skillForm.submit()">Save</button>
+  </div>
+</app-dialog>
+
+<form [formGroup]="profileSkillForm" class="form-field" (ngSubmit)="submit()">
+    @if(skills.length) {
+    <div class="skill-select-group">
+      <select formControlName="id" class="skill-select">
+          @for (skill of skills; track skill.id) {
+          <option [value]="skill.id">{{ skill.skill }}</option>
+          }
+      </select>
+      <button class="button-primary" type="button" (click)="deleteSkill()">Delete</button>
+    </div>
+  } @else {
+    <p>No skills found</p>
+  }
+  <button class="button-primary" type="button" (click)="openDialog()">Create Skill</button>
+
+  <div class="skill-badges">
+    @for (skill of profileSkills; track skill.id) {
+      <span class="skill-badge">
+        {{ skill.skill.skill }}
+        <button class="delete-skill" (click)="deleteProfileSkill(skill.id)">
+          <svg-icon name="x" src="icons/x.svg" class="icon"></svg-icon>
+        </button>
+      </span>
+    }
+  </div>
+</form>

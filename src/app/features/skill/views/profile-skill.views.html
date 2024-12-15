@@ -1,0 +1,24 @@
+<app-dialog [isOpen]="isOpen" (closeDialog)="closeDialog()" title="Skills">
+    <app-profile-skill-form #profileSkillForm (onSubmit)="onSubmit($event)"></app-profile-skill-form>
+    <div class="dialog-footer-buttons" dialog-footer>
+        <button class="button-outline" (click)="closeDialog()">Close</button>
+        <button class="button-primary" (click)="profileSkillForm.submit()">Save</button>
+    </div>
+</app-dialog>
+
+@if (selectedProfile) {
+<section>
+  <h2>Skills</h2>
+  <hr />
+  @if(!profile()?.ProfileSkill?.length) {
+  <p>No profile skills found</p>
+  } @else { @for (skills of skillGroupedByCategory; track $index) {
+  <div class="skill-item">
+    <h3>{{ skills[0] }}:</h3>
+    <span>{{ skills[1].join(', ') }}</span>
+  </div>
+  }}
+
+  <button class="button-primary" (click)="openDialog()">Add Profile Skill</button>
+</section>
+}
