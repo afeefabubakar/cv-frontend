@@ -14,7 +14,6 @@ export class ProfileDataService {
   profileData = signal<Profile | undefined>(undefined);
   isLocked = computed(() => {
     if (this.profileData()) {
-      console.log(this.profileData()?.locked);
       return this.profileData()?.locked ?? false;
     }
     return false;
