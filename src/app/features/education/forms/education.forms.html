@@ -2,14 +2,23 @@
     <div class="form-field">
         <label for="institute">Institute</label>
         <input type="text" id="institute" formControlName="institute" />
+        @if (invalidFields['institute']) {
+            <span class="form-input-error-message">{{ invalidFields['institute']['required'] ? 'Institute is required' : '' }}</span>
+        }
     </div>
     <div class="form-field">
         <label for="degree">Degree</label>
         <input type="text" id="degree" formControlName="degree" />
+        @if (invalidFields['degree']) {
+            <span class="form-input-error-message">{{ invalidFields['degree']['required'] ? 'Degree is required' : '' }}</span>
+        }
     </div>
     <div class="form-field">
         <label for="cgpa">CGPA</label>
         <input type="number" id="cgpa" formControlName="cgpa" min="0" max="4" step="0.01" />
+        @if (invalidFields['cgpa']) {
+            <span class="form-input-error-message">{{ invalidFields['cgpa']['required'] ? 'CGPA is required' : '' }}</span>
+        }
     </div>
     <div class="form-field">
         <label for="awards">Awards</label>
@@ -21,9 +30,11 @@
                         Remove
                     </button>
                 </div>
-                <span *ngIf="submitted && awards.at(i).errors?.['required']" class="form-input-error-message">
-                    Award is required
-                </span>
+                @if (invalidFields['awards'] && invalidFields['awards'][i]) {
+                    <span class="form-input-error-message">
+                        {{ invalidFields['awards'][i]['required'] ? 'Award is required' : '' }}
+                    </span>
+                }
             </div>
         }
         <button type="button" class="button-outline" (click)="addAward()">
@@ -40,9 +51,11 @@
                         Remove
                     </button>
                 </div>
-                <span *ngIf="submitted && activities.at(i).errors?.['required']" class="form-input-error-message">
-                    Activity is required
-                </span>
+                @if (invalidFields['activities'] && invalidFields['activities'][i]) {
+                    <span class="form-input-error-message">
+                        {{ invalidFields['activities'][i]['required'] ? 'Activity is required' : '' }}
+                    </span>
+                }
             </div>
         }
         <button type="button" class="button-outline" (click)="addActivity()">
@@ -56,7 +69,9 @@
                 <option [value]="city.id">{{ city.name }}</option>
             }
         </select>
-        <span *ngIf="invalidFields['location']" class="form-input-error-message">{{ invalidFields['location']['required'] ? 'Location is required' : '' }}</span>
+        @if (invalidFields['location']) {
+            <span class="form-input-error-message">{{ invalidFields['location']['required'] ? 'Location is required' : '' }}</span>
+        }
     </div>
     <div class="form-field">
         <label for="state">State</label>
@@ -65,7 +80,9 @@
                 <option [value]="state.id">{{ state.name }}</option>
             }
         </select>
-        <span *ngIf="invalidFields['state']" class="form-input-error-message">{{ invalidFields['state']['required'] ? 'State is required' : '' }}</span>
+        @if (invalidFields['state']) {
+            <span class="form-input-error-message">{{ invalidFields['state']['required'] ? 'State is required' : '' }}</span>
+        }
     </div>
     <div class="form-field">
         <label for="country">Country</label>
@@ -74,17 +91,25 @@
                 <option [value]="country.id">{{ country.name }}</option>
             }
         </select>
-        <span *ngIf="invalidFields['country']" class="form-input-error-message">{{ invalidFields['country']['required'] ? 'Country is required' : '' }}</span>
+        @if (invalidFields['country']) {
+            <span class="form-input-error-message">{{ invalidFields['country']['required'] ? 'Country is required' : '' }}</span>
+        }
     </div>
     <div>
         <div class="parallel-form-field">
             <div class="form-field">
                 <label for="startDate">Start Date</label>
                 <input type="date" id="startDate" formControlName="startDate" />
+                @if (invalidFields['startDate']) {
+                    <span class="form-input-error-message">{{ invalidFields['startDate']['required'] ? 'Start date is required' : '' }}</span>
+                }
             </div>
             <div class="form-field">
                 <label for="endDate">End Date</label>
                 <input type="date" id="endDate" formControlName="endDate" />
+                @if (invalidFields['endDate']) {
+                    <span class="form-input-error-message">{{ invalidFields['endDate']['required'] ? 'End date is required' : '' }}</span>
+                }
             </div>
         </div>
         <div class="form-checkbox">

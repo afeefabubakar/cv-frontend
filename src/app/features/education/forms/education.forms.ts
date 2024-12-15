@@ -19,12 +19,11 @@ import { Country } from '../../../shared/types/location';
 import { Education } from '../../../shared/types/profile';
 import { FormGroup } from '@angular/forms';
 import { LocationService } from '../../location/services/location.services';
-import { NgIf } from '@angular/common';
 import { State } from '../../../shared/types/location';
 
 @Component({
   selector: 'app-education-form',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule],
   templateUrl: './education.forms.html',
   styleUrl: './education.forms.css',
 })
