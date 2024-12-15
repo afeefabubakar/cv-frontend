@@ -26,8 +26,11 @@ export class EducationComponent {
   selectedProfile: string = '';
   education = signal<Education[]>([]);
   selectedEducation = signal<Education | null>(null);
+  isLocked = false;
+
   constructor() {
     effect(() => {
+      this.isLocked = this.profileDataService.isLocked();
       this.selectedProfile = this.profileDataService.selectedProfile();
       const profile = this.profileDataService.profile();
       if (profile) {

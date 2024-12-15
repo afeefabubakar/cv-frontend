@@ -18,9 +18,11 @@ export class MiscViewsComponent {
   misc: Misc[] = [];
   isOpen: boolean = false;
   selectedProfile: string = '';
+  isLocked = false;
 
   constructor() {
     effect(() => {
+      this.isLocked = this.profileService.isLocked();
       this.selectedProfile = this.profileService.selectedProfile();
       this.misc = this.miscService.misc();
     });

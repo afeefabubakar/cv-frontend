@@ -1,10 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, Injectable, Signal, signal, effect } from '@angular/core';
-import {
-  Profile,
-  ProfileListItem,
-  WorkExperience,
-} from '../../../shared/types/profile';
+import { computed, Injectable, signal, effect } from '@angular/core';
+import { Profile, ProfileListItem } from '../../../shared/types/profile';
 import { QueryReturn } from '../../../shared/types';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -16,6 +12,13 @@ export class ProfileDataService {
   selectedProfile = signal('');
   refetchProfile = signal(false);
   profileData = signal<Profile | undefined>(undefined);
+  isLocked = computed(() => {
+    if (this.profileData()) {
+      console.log(this.profileData()?.locked);
+      return this.profileData()?.locked ?? false;
+    }
+    return false;
+  });
 
   profile = computed(() => {
     if (this.refetchProfile()) {
@@ -66,6 +69,16 @@ export class ProfileDataService {
       .put<QueryReturn<Profile>>(
         environment.apiUrl + `/profile/${this.selectedProfile()}`,
         profile
+      )
+      .subscribe((res) => {
+        this.refetchProfile.set(true);
+      });
+  }
+
+  setProfileLock(lock: boolean) {
+    this.http
+      .get<QueryReturn<Profile>>(
+        environment.apiUrl + `/profile/${this.selectedProfile()}/lock`
       )
       .subscribe((res) => {
         this.refetchProfile.set(true);

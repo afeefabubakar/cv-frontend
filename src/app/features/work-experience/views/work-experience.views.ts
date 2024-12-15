@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { DialogComponent } from '../../../shared/components/dialog/dialog.components';
 import { WorkExperienceFormComponent } from '../forms/work-experience.forms';
 import { WorkExperience } from '../../../shared/types/profile';
@@ -26,11 +26,13 @@ export class WorkExperienceComponent {
   isOpen: boolean = false;
   workExperience = signal<WorkExperience[]>([]);
   selectedProfile: string = '';
+  isLocked = false;
   selectedWorkExperience = signal<WorkExperience | null>(null);
 
   constructor() {
     effect(() => {
       this.selectedProfile = this.profileDataService.selectedProfile();
+      this.isLocked = this.profileDataService.isLocked();
       const profile = this.profileDataService.profile();
       if (profile) {
         this.workExperience.set(profile.workExperiences);

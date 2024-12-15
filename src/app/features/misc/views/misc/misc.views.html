@@ -23,12 +23,16 @@
                         <p>{{ m.item['value'] }}</p>
                     }
                 </div>
-                <button class="button-icon destructive" (click)="deleteMisc(m.id)"><svg-icon name="delete" src="icons/delete.svg" class="icon" style="width: 1.2rem; height: 1.2rem;"></svg-icon></button>
+                @if (!isLocked) {
+                    <button class="button-icon destructive" (click)="deleteMisc(m.id)"><svg-icon name="delete" src="icons/delete.svg" class="icon" style="width: 1.2rem; height: 1.2rem;"></svg-icon></button>
+                }
             </div>
         }
     } @else {
         <p>No items found</p>
     }
-    <button class="button-primary" (click)="openDialog()">Add item</button>
+    @if (!isLocked) {
+        <button class="button-primary" (click)="openDialog()">Add item</button>
+    }
 </section>
 }

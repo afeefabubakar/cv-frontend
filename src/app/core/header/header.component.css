@@ -45,3 +45,19 @@ h2 {
     text-decoration: none;
     color: var(--color-text-gray-blue);
 }
+
+.lock-button {
+    background-color: transparent;
+    border: 1px solid var(--color-text-gray-blue);
+    color: var(--color-text-gray-blue);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

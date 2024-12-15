@@ -17,9 +17,11 @@ export class ProfileSkillViews {
   selectedProfile: string = '';
   profile = signal<Profile | null>(null);
   isOpen: boolean = false;
+  isLocked = false;
 
   constructor() {
     effect(() => {
+      this.isLocked = this.profileService.isLocked();
       this.selectedProfile = this.profileService.selectedProfile();
       const profile = this.profileService.profile();
       if (profile) {

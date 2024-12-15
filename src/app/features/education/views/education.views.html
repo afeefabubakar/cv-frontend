@@ -15,14 +15,16 @@
     <article class="education-item">
       <div class="education-item-title">
         <h3>{{ education.institute }} | {{ education.degree }}</h3>
-        <div class="education-item-actions">
-          <button class="button-icon" (click)="openDialog(education)">
-            <svg-icon name="edit" src="icons/edit.svg" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
+        @if (!isLocked) {
+          <div class="education-item-actions">
+            <button class="button-icon" (click)="openDialog(education)">
+              <svg-icon name="edit" src="icons/edit.svg" class="icon" style="width: 1rem; height: 1rem;"></svg-icon>
           </button>
           <button class="button-icon destructive" (click)="deleteEducation(education.id)">
             <svg-icon name="delete" src="icons/delete.svg" class="icon" style="width: 1.2rem; height: 1.2rem;"></svg-icon>
-          </button>
-        </div>
+            </button>
+          </div>
+        }
       </div>
       <div class="education-item-details">
         <p>{{ education.location.name === education.location.state.name ? education.location.name : education.location.name + ', ' + education.location.state.name }}{{ ', ' + education.location.country.name }}</p>
@@ -38,5 +40,8 @@
     </article>
   }
 
-  <button *ngIf="education() && education().length < 3" class="button-primary" (click)="openDialog()">Add Education</button>
+  @if (!isLocked && education() && education().length < 3) {
+    <button class="button-primary" (click)="openDialog()">Add Education</button>
+  }
 </section>
+

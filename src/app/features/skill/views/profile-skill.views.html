@@ -19,6 +19,8 @@
   </div>
   }}
 
-  <button class="button-primary" (click)="openDialog()">Add Profile Skill</button>
+  @if (!isLocked) {
+    <button class="button-primary" (click)="openDialog()">Add Profile Skill</button>
+  }
 </section>
 }

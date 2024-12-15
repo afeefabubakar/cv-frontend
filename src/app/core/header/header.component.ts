@@ -1,12 +1,12 @@
 import { Component, inject, effect } from '@angular/core';
 import { ProfileDataService } from '../../features/profile/services/profile-data.services';
 import { ProfileListItem } from '../../shared/types/profile';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import { AngularSvgIconModule, SvgIconComponent } from 'angular-svg-icon';
 import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [AngularSvgIconModule, NgIf],
+  imports: [AngularSvgIconModule, NgIf, SvgIconComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
@@ -45,5 +45,9 @@ export class AppHeader {
   onProfileSelect(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
     this.profileDataService.selectedProfile.set(value);
+  }
+
+  toggleLock() {
+    this.profileDataService.setProfileLock(!this.profileDataService.isLocked());
   }
 }

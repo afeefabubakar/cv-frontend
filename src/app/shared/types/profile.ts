@@ -14,6 +14,7 @@ export interface Profile {
   email: string;
   phone: string;
   summary: string;
+  locked: boolean;
   createdAt: Date;
   updatedAt: Date;
   location: City;
