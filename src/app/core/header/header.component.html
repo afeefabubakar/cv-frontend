@@ -1,7 +1,7 @@
 <app-dialog [isOpen]="isOpen" (closeDialog)="closeDialog()" [title]="selectedProfile ? 'Edit Profile' : 'Create Profile'">
     <app-profile-form #profileForm (onSubmit)="onSubmit($event)"></app-profile-form>
     <div dialog-footer class="dialog-footer-buttons">
-        <button class="button-outline" (click)="profileForm.form.reset()">Cancel</button>
+        <button class="button-outline" (click)="closeDialog()">Cancel</button>
         <button class="button-primary" (click)="profileForm.submit()">Save</button>
     </div>
 </app-dialog>
